@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title>Simple Scrollbar</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<style type="text/css">
+body{
+	width: 700px;
+	margin: 100px auto;
+}
+.some-content-related-div{
+	padding: 5px;
+}
+h1{
+	padding-bottom: 30px;
+
+	padding-top: 100px;
+}
+.some-content-related-div p{
+	padding: 8px;
+}
+</style>
+<body>
+<h1>Simple Scrollbar</h1>
+
+<div class="some-content-related-div">
+	<div id="scrolltest1">
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus, felis interdum condimentum consectetur, nisl libero elementum eros, vehicula congue lacus eros non diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mauris lorem, lacinia id tempus non, imperdiet et leo. Cras sit amet erat sit amet lacus egestas placerat. Aenean ultricies ultrices mauris ac congue. In vel tortor vel velit tristique tempus ac id nisi. Proin quis lorem velit. Nunc dui dui, blandit a ullamcorper vitae, congue fringilla lectus. Aliquam ultricies malesuada feugiat. Vestibulum placerat turpis et eros lobortis vel semper sapien pulvinar.</p>
+		<p>Pellentesque rhoncus aliquet porta. Sed vel magna eu turpis pharetra consequat ut vitae lectus. In molestie sollicitudin mi sit amet convallis. Aliquam erat volutpat. Nullam feugiat placerat ipsum eget malesuada. Nulla facilisis nunc non dolor vehicula pretium. Sed dui magna, sodales id pharetra non, ullamcorper eu sapien. Mauris ac consectetur leo. Mauris consequat, lectus ut bibendum pulvinar, leo magna feugiat enim, eu commodo lacus sem vel ante. Sed tempus metus eget leo mollis vulputate. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+	</div>
+</div>
+
+<div class="some-content-related-div">
+	<div id="scrolltest2">
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus, felis interdum condimentum consectetur, nisl libero elementum eros, vehicula congue lacus eros non diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus mauris lorem, lacinia id tempus non, imperdiet et leo. Cras sit amet erat sit amet lacus egestas placerat. Aenean ultricies ultrices mauris ac congue. In vel tortor vel velit tristique tempus ac id nisi. Proin quis lorem velit. Nunc dui dui, blandit a ullamcorper vitae, congue fringilla lectus. Aliquam ultricies malesuada feugiat. Vestibulum placerat turpis et eros lobortis vel semper sapien pulvinar.</p>
+		<p>Pellentesque rhoncus aliquet porta. Sed vel magna eu turpis pharetra consequat ut vitae lectus. In molestie sollicitudin mi sit amet convallis. Aliquam erat volutpat. Nullam feugiat placerat ipsum eget malesuada. Nulla facilisis nunc non dolor vehicula pretium. Sed dui magna, sodales id pharetra non, ullamcorper eu sapien. Mauris ac consectetur leo. Mauris consequat, lectus ut bibendum pulvinar, leo magna feugiat enim, eu commodo lacus sem vel ante. Sed tempus metus eget leo mollis vulputate. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+	</div>
+</div>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/scrollbar.js"></script>
+
+<script>
+$('#scrolltest1').simpleScrollbar({
+	alwaysvisible : true,
+	railVisible: true,
+	width: '500px',
+});
+
+$('#scrolltest2').simpleScrollbar({
+	alwaysvisible : true,
+	width: '300px',
+	color: 'red',
+	railVisible: true,
+	railcolor: 'blue',
+	position: 'left',
+});
+
+</script>
+</body>
+</html>
+
+
+
