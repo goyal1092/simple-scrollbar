@@ -29,9 +29,6 @@
 		//scrollbar always visible
 		alwaysvisible : false,
 
-		// hide scrollbar
-		disableFadeOut : false,
-
 		//border radius
 		borderRadius: '7px',
 
@@ -121,7 +118,6 @@
 			});
 
 			//create scrolbar
-
 			var bar = $(divS).addClass('scroll-bar').css({
 				background: settings.color,
 				width: settings.size,
@@ -168,31 +164,25 @@
 		            	return false;
 				});
 			}
-		rail.hover(function(){
-          showBar();
-        }, function(){
-          hideBar();
-        });
 
         // on bar over
-        bar.hover(function(){
-          isOverBar = true;
-        }, function(){
-          isOverBar = false;
-        });
+        //bar.hover(function(){
+        //  isOverBar = true;
+        //}, function(){
+        //  isOverBar = false;
+        //});
 
         // show on parent mouseover
         $this.hover(function(){
           isOverPanel = true;
           showBar();
-          hideBar();
         }, function(){
           isOverPanel = false;
           hideBar();
         });
 			attachWheel();
 
-			function _onWheel(e)
+		function _onWheel(e)
         {
           // use mouse wheel only when mouse is over
           if (!isOverPanel) { return; }
@@ -214,67 +204,73 @@
           if (!releaseScroll) { e.returnValue = false; }
         }
 
-			function scrollContent(y, isWheel, isJump){
+		function scrollContent(y, isWheel, isJump){
+			releaseScroll = false;
+			var delta = y;
+			var maxTop = $this.outerHeight() - bar.outerHeight();
 
-				releaseScroll = false;
-				var delta = y;
-				var maxTop = $this.outerHeight() - bar.outerHeight();
+			if(isWheel){
+				delta = parseInt(bar.css('top')) + y * parseInt(settings.wheelStep) / 100 * bar.outerHeight();
+				delta = Math.min(Math.max(delta,0), maxTop);
 
-				if(isWheel){
-					delta = parseInt(bar.css('top')) + y * parseInt(settings.wheelStep) / 100 * bar.outerHeight();
-					delta = Math.min(Math.max(delta,0), maxTop);
+				delta = (y > 0) ? Math.ceil(delta) : Math.floor(delta);
 
-					delta = (y > 0) ? Math.ceil(delta) : Math.floor(delta);
-
-					bar.css({top: delta + 'px' });
-				}
-
-				percentScroll = parseInt(bar.css('top'))/($this.outerHeight() - bar.outerHeight());
-				delta = percentScroll * ($this[0].scrollHeight - $this.outerHeight());
-
-				$this.scrollTop(delta);
-
-				$this.trigger('scrolling', ~~delta);
-
-				if (isJump)
-		          {
-		            delta = y;
-		            var offsetTop = delta / $this[0].scrollHeight * $this.outerHeight();
-		            offsetTop = Math.min(Math.max(offsetTop, 0), maxTop);
-		            bar.css({ top: offsetTop + 'px' });
-		          }
+				bar.css({top: delta + 'px' });
 			}
 
-			function attachWheel()
-	        {
-	          if (window.addEventListener)
+			percentScroll = parseInt(bar.css('top'))/($this.outerHeight() - bar.outerHeight());
+			delta = percentScroll * ($this[0].scrollHeight - $this.outerHeight());
+
+			$this.scrollTop(delta);
+
+			$this.trigger('scrolling', ~~delta);
+
+			if (isJump)
 	          {
-	            this.addEventListener('DOMMouseScroll', _onWheel, false );
-	            this.addEventListener('mousewheel', _onWheel, false );
+	            delta = y;
+	            var offsetTop = delta / $this[0].scrollHeight * $this.outerHeight();
+	            offsetTop = Math.min(Math.max(offsetTop, 0), maxTop);
+	            bar.css({ top: offsetTop + 'px' });
 	          }
-	          else
-	          {
-	            document.attachEvent("onmousewheel", _onWheel)
-	          }
-	        }
-	        
-	        function showBar(){
-	        	return;
-	        }
+		}
 
-	        function hideBar(){
-	        	return;
-	        }
+		function attachWheel()
+        {
+          if (window.addEventListener)
+          {
+            this.addEventListener('DOMMouseScroll', _onWheel, false );
+            this.addEventListener('mousewheel', _onWheel, false );
+          }
+          else
+          {
+            document.attachEvent("onmousewheel", _onWheel)
+          }
+        }
+        
+        function showBar(){
+        	if (isOverPanel && !settings.alwaysvisible){
+        		bar.css({display: 'block'});
+        		rail.css({display: 'block'});
+        	}
+        }
 
-			function getBarHeight(){
-	            // calculate scrollbar height and make sure it is not too small
-	            barHeight = Math.max(($this.outerHeight() / $this[0].scrollHeight) * $this.outerHeight(), minBarHeight);
-	            bar.css({ height: barHeight + 'px' });
+        function hideBar(){
+        	if (! isOverPanel && !settings.alwaysvisible){
+        		bar.css({display: 'none'});
+        		rail.css({display: 'none'});
+        	}
+        }
 
-	            // hide scrollbar if content is not long enough
-	            var display = barHeight == $this.outerHeight() ? 'none' : 'block';
-	            bar.css({ display: display });
-	        }
+		function getBarHeight(){
+            // calculate scrollbar height and make sure it is not too small
+            barHeight = Math.max(($this.outerHeight() / $this[0].scrollHeight) * $this.outerHeight(), minBarHeight);
+            bar.css({ height: barHeight + 'px' });
+
+            // hide scrollbar if content is not long enough
+
+            var display = barHeight == ($this.outerHeight() < minBarHeight )? 'none' : bar.css('display');
+            bar.css({ display: display });
+        }
 
 		});
 	}
