@@ -86,7 +86,6 @@
 					$parent.css('height', 'auto');
 					$this.css('height', 'auto');
 					var height = $parent.parent().height();
-					console.log(height);
 					$parent.css('height', height);
 					$this.css('height', height);
 				}
@@ -152,21 +151,18 @@
 					var $doc = $(document);
 					isDragg = true;
 					t = parseFloat(bar.css('top'));
-					console.log(t);
-					console.log(e);
 					pageY = e.pageY
-					console.log(pageY);
-					$doc.bind("mousemove.slimscroll", function(e){
+					$doc.bind("mousemove.scroll", function(e){
 						currTop = t + e.pageY - pageY;
 						bar.css('top', currTop);
 						scrollContent(0, bar.position().top, false);
 					});
-					$doc.bind("mouseup.slimscroll", function(e) {
+					$doc.bind("mouseup.scroll", function(e) {
 		              	isDragg = false;
-		              	$doc.unbind('.slimscroll');
+		              	$doc.unbind('.scroll');
 		            });
 		            return false;
-		        	}).bind("selectstart.slimscroll", function(e){
+		        	}).bind("selectstart.scroll", function(e){
 		            	e.stopPropagation();
 		            	e.preventDefault();
 		            	return false;
@@ -198,22 +194,16 @@
 
 			function _onWheel(e)
         {
-        	console.log('coming on line 192');
           // use mouse wheel only when mouse is over
           if (!isOverPanel) { return; }
 
           var e = e || window.event;
-          console.log('coming on line 197');
+
           var delta = 0;
-          console.log('coming on line 199');
           if (e.wheelDelta) { delta = -e.wheelDelta/120; }
-          console.log('coming on line 201');
           if (e.detail) { delta = e.detail / 3; }
-          console.log('coming on line 203');
+
           var target = e.target || e.srcTarget || e.srcElement;
-          console.log($(target));
-          console.log($this.parent());
-          console.log($this.parent().hasClass('.wrapper'));
           if ($(target).closest('.wrapper').is($this.parent())) {
             // scroll content
             scrollContent(delta, true);
@@ -225,11 +215,10 @@
         }
 
 			function scrollContent(y, isWheel, isJump){
-				console.log('coming on 214', + y);
+
 				releaseScroll = false;
 				var delta = y;
 				var maxTop = $this.outerHeight() - bar.outerHeight();
-				console.log(maxTop);
 
 				if(isWheel){
 					delta = parseInt(bar.css('top')) + y * parseInt(settings.wheelStep) / 100 * bar.outerHeight();
@@ -260,7 +249,6 @@
 	        {
 	          if (window.addEventListener)
 	          {
-	            console.log(this);
 	            this.addEventListener('DOMMouseScroll', _onWheel, false );
 	            this.addEventListener('mousewheel', _onWheel, false );
 	          }
